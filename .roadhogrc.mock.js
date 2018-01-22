@@ -6,8 +6,8 @@ const noProxy = process.env.NO_PROXY === 'false';
 
 const proxy = {
 	'GET /products/list': [
-			       { name: 'dva', id: 1 },
-			       { name: 'antd', id: 2 }
+			       { key:1,name: 'dva', id: 1 },
+			       { key :2,name: 'antd', id: 2 }
 			     ]
 }
 

@@ -4,23 +4,35 @@ export default {
   namespace: 'products',
   state: {
       productList :[],
+      loading:true,
   },
-  reducers: {
-    'delete'(state, { payload: id }) {
-      return state.filter(item => item.id !== id);
-    },
-  },
-  
+ 
   effects:{
   	*list(_, { call , put }) {
   		const response = yield call(query);
+      
       console.log("response",response);
+
   		yield put({
-  			type :'a',
-  			payload : {
-            productList : response,
-        } ,
+  			type :'lists',
+  			payload : response ,
   		})
   	}
-  }
+  },
+
+   reducers: {
+    delete(state, { payload: id }) {
+      return state.filter(item => item.id !== id);
+    },
+    lists(state , action ){
+      console.log("state=====",state);
+      console.log("action=====",action);
+        return {
+          ...state,
+          productList : action.payload,
+        };
+    }
+
+  },
+  
 };

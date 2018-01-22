@@ -3,13 +3,14 @@ import { connect } from 'dva';
 import ProductList from '../components/ProductList';
 
 @connect(
-  state => state
+  state => ({
+    products : state.products,
+  })
 )
 
  export default class Products extends Component{
 
    state = {
-    products : [] ,
     loading :true ,
    }
 
@@ -28,13 +29,12 @@ import ProductList from '../components/ProductList';
   }
 
   render(){
-    const {products} = this.props ;
+    const { products } = this.props ;
     const {productList} = products ;
-    console.log("products",productList);
      return (
       <div>
         <h2>List of Products</h2>
-        <ProductList onDelete={this.handleDelete} products={productList} loading={this.state.loading}/>
+        <ProductList onDelete={this.handleDelete} products={productList.data ?  productList.data : productList} loading={this.state.loading}/>
       </div>
       );
   }
