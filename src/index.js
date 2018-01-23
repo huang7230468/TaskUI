@@ -17,6 +17,8 @@ const app = dva(/*{
 
 // 3. Model
  app.model(require('./models/products').default);
+  app.model(require('./models/task').default);
+
 /*models.forEach((m) => {
   app.model(m);
 });*/

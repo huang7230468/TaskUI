@@ -2,7 +2,8 @@
 
 
 // 是否禁用代理
-const noProxy = process.env.NO_PROXY === 'false';
+const noProxy =  true;//process.env.NO_PROXY === 'false';
+
 
 const proxy = {
 	'GET /products/list': [
@@ -12,5 +13,7 @@ const proxy = {
 }
 
 
-export default noProxy ? {} : proxy;
+export default noProxy ? {
+		'POST /web/(.*)': 'http://localhost:8080/web',
+	} : proxy;
 

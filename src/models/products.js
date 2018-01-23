@@ -22,7 +22,11 @@ export default {
 
    reducers: {
     delete(state, { payload: id }) {
-      return state.filter(item => item.id !== id);
+      const map = state.productList.filter(item => item.id !== id);
+      return {  
+        ...state,
+        productList : map,
+      } ;
     },
     lists(state , action ){
       console.log("state=====",state);

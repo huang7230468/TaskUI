@@ -34,11 +34,9 @@ export default function request(url, options) {
     };
     newOptions.body = JSON.stringify(newOptions.body);
   }
-  console.log("options",options);
-
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then(data => ({ data }))
+    //.then(data => ({ data }))
     .catch(err => ({ err }));
 }

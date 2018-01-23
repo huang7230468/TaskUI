@@ -1,4 +1,4 @@
-import React , { Component } from 'react';
+import React , { Component ,PureComponent} from 'react';
 import { connect } from 'dva';
 import ProductList from '../components/ProductList';
 
@@ -8,11 +8,15 @@ import ProductList from '../components/ProductList';
   })
 )
 
- export default class Products extends Component{
+ export default class Products extends PureComponent{
 
-   state = {
-    loading :true ,
-   }
+     constructor(props) {
+        super(props);
+
+        this.state = {
+         loading :true ,
+        };
+      }
 
   componentDidMount() {
     this.props.dispatch({
@@ -20,9 +24,8 @@ import ProductList from '../components/ProductList';
     }).then(() => this.setState({ loading: false }));
   }
 
-  handleDelete (id){
-     const { dispatch } = this.props;
-      dispatch({
+  handleDelete = (id) => {
+      this.props.dispatch({
         type: 'products/delete',
           payload: id,
       });
@@ -32,9 +35,9 @@ import ProductList from '../components/ProductList';
     const { products } = this.props ;
     const {productList} = products ;
      return (
-      <div>
+      <div> 
         <h2>List of Products</h2>
-        <ProductList onDelete={this.handleDelete} products={productList.data ?  productList.data : productList} loading={this.state.loading}/>
+        <ProductList onDelete={this.handleDelete} products={productList} loading={this.state.loading}/>
       </div>
       );
   }
