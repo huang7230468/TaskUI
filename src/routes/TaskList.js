@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 import StandarTable from '../components/StandardTable/index' ;
+import StandarModal from '../components/StandarModal/index' ;
+import TaskDetail from '../components/StandarModal/TaskDetail/index' ;
+
 import { Table, Alert, Badge ,Popconfirm, Button } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
@@ -22,6 +25,7 @@ export default class TaskList  extends PureComponent{
 
         this.state = {
          loading :true ,
+         ModalVisible_C : false ,
         };
       }
 
@@ -35,6 +39,10 @@ export default class TaskList  extends PureComponent{
 	  		type:'tasks/delete',
 	  		payload : id ,
 	  	})
+	  }
+	  handleModalVisible (booleanVal){
+	  	console.log("booleanVal",booleanVal);
+	  		this.setState({ModalVisible_C : booleanVal ,})
 	  }
 	
 	render(){
@@ -110,7 +118,15 @@ export default class TaskList  extends PureComponent{
 		return(
 
 			<div>
+			 	<Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>新建</Button>
 				<StandarTable columns={columns} dataSource = {taskList} rowKey={record => record.id} />
+
+				<StandarModal
+		          title="创建任务"
+		          visible={this.state.ModalVisible_C}
+		        >
+		        	<TaskDetail/>
+		        </StandarModal>
 			</div>
 
 			)
