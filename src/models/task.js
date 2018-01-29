@@ -1,10 +1,11 @@
-import {query,deleteTask} from '../services/task';
+import {query,deleteTask,createTask} from '../services/task';
 import { message } from 'antd';
 export default {
   namespace: 'tasks',
   state: {
       taskList :[],
       loading:true,
+      submitting : false ,
   },
  
   effects:{
@@ -23,6 +24,37 @@ export default {
             })
       }
   	},
+    *create({payload},{call,put}){
+         yield put({
+          type: 'changeFormSubmitting',
+          payload: true,
+        });
+
+
+         const response = yield call(createTask,payload);
+         if(response.success){
+           message.success('创建成功');
+        }else{
+            message.success('创建失败');
+        }
+         const response1 = yield call(query);
+            if(response1.success){
+                yield put({
+                      type :'lists',
+                      payload : response1.data,
+                    })
+
+            }else{
+                  yield put({
+                    type :'lists',
+                    payload : [],
+                  })
+            }
+            yield put({
+              type: 'changeFormSubmitting',
+              payload: false,
+            });
+    },
     *delete({payload},{call ,put }){
         const response = yield call(deleteTask,payload);
         if(response.success){
@@ -59,8 +91,13 @@ export default {
           ...state,
           taskList : action.payload,
         };
+    },
+    changeFormSubmitting(state,action){
+      return{
+        ...state,
+      submitting : action.payload,
+      }
     }
-
   },
   
 };

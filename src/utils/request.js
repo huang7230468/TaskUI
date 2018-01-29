@@ -25,6 +25,7 @@ export default function request(url, options) {
   const defaultOptions = {
     credentials: 'include',
   };
+
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     newOptions.headers = {
@@ -34,7 +35,8 @@ export default function request(url, options) {
     };
     newOptions.body = JSON.stringify(newOptions.body);
   }
-  return fetch(url, options)
+
+  return fetch(url, newOptions)
     .then(checkStatus)
     .then(parseJSON)
     //.then(data => ({ data }))

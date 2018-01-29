@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import StandarTable from '../components/StandardTable/index' ;
-import StandarModal from '../components/StandarModal/index' ;
-import TaskDetail from '../components/StandarModal/TaskDetail/index' ;
+import StandarTable from '../components/StandardTable' ;
+import StandarModal from '../components/StandarModal' ;
+import TaskDetail from '../components/StandarModal/TaskDetail' ;
 
 import { Table, Alert, Badge ,Popconfirm, Button } from 'antd';
 import moment from 'moment';
@@ -40,9 +40,11 @@ export default class TaskList  extends PureComponent{
 	  		payload : id ,
 	  	})
 	  }
-	  handleModalVisible (booleanVal){
-	  	console.log("booleanVal",booleanVal);
-	  		this.setState({ModalVisible_C : booleanVal ,})
+	  handleModalVisibles (booleanVal){
+	  	this.setState({ModalVisible_C : booleanVal ,})
+	  }
+	  handleChildSubmit(){
+	  	this.refs.validateAndSubmit.validate();
 	  }
 	
 	render(){
@@ -118,14 +120,17 @@ export default class TaskList  extends PureComponent{
 		return(
 
 			<div>
-			 	<Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>新建</Button>
+			 	<Button icon="plus" type="primary" onClick={() => this.handleModalVisibles(true)}>新建</Button>
 				<StandarTable columns={columns} dataSource = {taskList} rowKey={record => record.id} />
 
 				<StandarModal
 		          title="创建任务"
 		          visible={this.state.ModalVisible_C}
+		          handleModalVisible={this.handleModalVisibles.bind(this)}
+		          handle={this.handleChildSubmit.bind(this)}
+		          footerVal={null}
 		        >
-		        	<TaskDetail/>
+		        	<TaskDetail ref="validateAndSubmit"/>
 		        </StandarModal>
 			</div>
 

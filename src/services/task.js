@@ -13,3 +13,13 @@ export async function deleteTask(params){
 		method:'POST'
 	});
 }
+
+export async function createTask(params){
+	console.log("params======",params);
+	return request('web/task/new',{
+		method:'POST',
+		body: {
+			...params,
+		},
+	});
+}
